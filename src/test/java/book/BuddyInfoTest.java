@@ -1,3 +1,5 @@
+package book;
+
 import book.BuddyInfo;
 
 import static org.junit.Assert.*;

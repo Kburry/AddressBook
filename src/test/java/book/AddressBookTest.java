@@ -1,3 +1,5 @@
+package book;
+
 import book.AddressBook;
 import book.BuddyInfo;
 
