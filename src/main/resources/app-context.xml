@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="mainFrame" class="ui.AddressBookGUI" init-method="init">
+        <property name="contentPane">
+            <ref bean="mainPanel"/>
+        </property>
+        <property name="title">
+            <value>Address Book</value>
+        </property>
+    </bean>
+    <bean id="mainPanel" class="ui.BoxLayoutPanel" init-method="init">
+        <property name="axis">
+            <!--  "1" corresponds to BoxLayout.Y_AXIS -->
+            <!--  Spring can access constants, but it's more complex -->
+            <value>1</value>
+        </property>
+        <property name="panelComponents">
+            <list>
+                <ref bean="itemScrollPane"/>
+                <ref bean="buttonPanel"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="itemScrollPane" class="javax.swing.JScrollPane">
+        <constructor-arg>
+            <ref bean="itemTable"/>
+        </constructor-arg>
+    </bean>
+    <bean id="itemTable" class="javax.swing.JTable">
+        <property name="model">
+            <ref bean="itemTableModel"/>
+        </property>
+    </bean>
+    <bean id="itemTableModel" class="ui.ItemTableModel">
+        <property name="itemList">
+            <ref bean="addressBook"/>
+        </property>
+    </bean>
+    <bean id="addressBook" class="book.AddressBook">
+        <property name="buddies">
+            <list>
+                <ref bean="buddy1"/>
+                <ref bean="buddy2"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="buddy1" class="book.BuddyInfo">
+    </bean>
+    <bean id="buddy2" class="book.BuddyInfo">
+        <property name="address">
+            <value>address</value>
+        </property>
+        <property name="name">
+            <value>name</value>
+        </property>
+        <property name="phoneNumber">
+            <value>555-5555</value>
+        </property>
+    </bean>
+    <bean id="buttonPanel" class="ui.BoxLayoutPanel" init-method="init">
+        <property name="axis">
+            <!--  "0" corresponds to BoxLayout.X_AXIS -->
+            <value>0</value>
+        </property>
+        <property name="panelComponents">
+            <list>
+                <ref bean="deleteButton"/>
+                <ref bean="addNewButton"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="deleteButton" class="ui.ActionListenerButton"
+          init-method="init">
+        <property name="actionListener">
+            <ref bean="deleteButtonListener"/>
+        </property>
+        <property name="text">
+            <value>Delete</value>
+        </property>
+    </bean>
+    <bean id="deleteButtonListener"
+          class="ui.DeleteActionListener">
+        <property name="list">
+            <ref bean="addressBook"/>
+        </property>
+        <property name="table">
+            <ref bean="itemTable"/>
+        </property>
+    </bean>
+    <bean id="addNewButton" class="ui.ActionListenerButton"
+          init-method="init">
+        <property name="actionListener">
+            <ref bean="addNewButtonListener"/>
+        </property>
+        <property name="text">
+            <value>Add New</value>
+        </property>
+    </bean>
+    <bean id="addNewButtonListener"
+          class="ui.AddActionListener">
+
+        <property name="list">
+            <ref bean="addressBook"/>
+        </property>
+        <property name="table">
+            <ref bean="itemTable"/>
+        </property>
+    </bean>
+</beans>
